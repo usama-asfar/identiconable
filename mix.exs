@@ -4,7 +4,7 @@ defmodule Identiconable.MixProject do
   def project do
     [
       app: :identiconable,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -29,7 +29,7 @@ defmodule Identiconable.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:egd, github: "erlang/egd", only: :dev},
+      {:egd, github: "erlang/egd"},
       {:ex_doc, "~> 0.23.0", only: :dev, runtime: false}
     ]
   end

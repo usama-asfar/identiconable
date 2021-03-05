@@ -1,4 +1,4 @@
-defmodule Identicon do
+defmodule Identiconable do
   def main(input, size) do
     input
     |> hash_input
@@ -9,7 +9,7 @@ defmodule Identicon do
     |> draw_image(size)
   end
 
-  def draw_image(%Identicon.Image{color: color, pixel_map: pixel_map}, size) do
+  defp draw_image(%Identiconable.Image{color: color, pixel_map: pixel_map}, size) do
     image = :egd.create(size, size)
     fill = :egd.color(color)
 
@@ -20,7 +20,7 @@ defmodule Identicon do
     :egd.render(image)
   end
 
-  def build_pixel_map(%Identicon.Image{grid: grid} = image, size) do
+  defp build_pixel_map(%Identiconable.Image{grid: grid} = image, size) do
     size = round(size / 5)
 
     pixel_map =
@@ -34,19 +34,19 @@ defmodule Identicon do
         {top_left, bottom_right}
       end)
 
-    %Identicon.Image{image | pixel_map: pixel_map}
+    %Identiconable.Image{image | pixel_map: pixel_map}
   end
 
-  def filter_odd_squares(%Identicon.Image{grid: grid} = image) do
+  defp filter_odd_squares(%Identiconable.Image{grid: grid} = image) do
     grid =
       Enum.filter(grid, fn {code, _index} ->
         rem(code, 2) == 0
       end)
 
-    %Identicon.Image{image | grid: grid}
+    %Identiconable.Image{image | grid: grid}
   end
 
-  def build_grid(%Identicon.Image{hex: hex} = image) do
+  defp build_grid(%Identiconable.Image{hex: hex} = image) do
     grid =
       hex
       |> Enum.chunk_every(3, 3, :discard)
@@ -54,22 +54,22 @@ defmodule Identicon do
       |> List.flatten()
       |> Enum.with_index()
 
-    %Identicon.Image{image | grid: grid}
+    %Identiconable.Image{image | grid: grid}
   end
 
-  def mirror_row([first, second | _tail] = row) do
+  defp mirror_row([first, second | _tail] = row) do
     row ++ [second, first]
   end
 
-  def pick_color(%Identicon.Image{hex: [r, g, b | _tail]} = image) do
-    %Identicon.Image{image | color: {r, g, b}}
+  defp pick_color(%Identiconable.Image{hex: [r, g, b | _tail]} = image) do
+    %Identiconable.Image{image | color: {r, g, b}}
   end
 
-  def hash_input(input) do
+  defp hash_input(input) do
     hex =
       :crypto.hash(:md4, input)
       |> :binary.bin_to_list()
 
-    %Identicon.Image{hex: hex}
+    %Identiconable.Image{hex: hex}
   end
 end
