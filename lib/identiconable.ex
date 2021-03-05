@@ -9,6 +9,10 @@ defmodule Identiconable do
     |> draw_image(size)
   end
 
+  def save(buffer, path, name) do
+    File.write("#{path}/#{name}.png", buffer)
+  end
+
   defp draw_image(%Identiconable.Image{color: color, pixel_map: pixel_map}, size) do
     image = :egd.create(size, size)
     fill = :egd.color(color)
