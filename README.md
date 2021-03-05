@@ -17,7 +17,7 @@ The package can be installed by adding `identiconable` to your list of dependenc
 ```elixir
 def deps do
   [
-    {:identiconable, "~> 0.1.0"}
+    {:identiconable, "~> 0.2.0"}
   ]
 end
 ```
@@ -26,4 +26,5 @@ end
 
 ```elixir
 Identiconable.main("Identiconable", 400)
+|> Identiconable.save("images", "my_identicon")
 ```
