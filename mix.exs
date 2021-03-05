@@ -29,7 +29,7 @@ defmodule Identiconable.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:egd, github: "erlang/egd"},
+      {:egd, github: "erlang/egd", only: :dev},
       {:ex_doc, "~> 0.23.0", only: :dev, runtime: false}
     ]
   end
